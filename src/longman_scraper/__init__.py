@@ -4,7 +4,6 @@ Public API:
     scrape_word(word: str) -> WordResult
     scrape_words(words: list[str]) -> dict[str, WordResult]
 
-Business-dictionary entries are always excluded.
 """
 
 from .api import scrape_word, scrape_words

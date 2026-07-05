@@ -13,6 +13,8 @@ from typing import AsyncIterator
 from playwright.async_api import Browser, async_playwright
 
 from .exceptions import PageLoadError
+import time
+
 
 BLOCKED_RESOURCE_TYPES = {"image", "stylesheet", "font", "media"}
 DEFAULT_TIMEOUT_MS = 240_000
@@ -45,11 +47,15 @@ async def fetch_html(
     Images, stylesheets, fonts, and media are blocked to speed up loading,
     since only the parsed DOM/text content is needed.
     """
+    print(f"  [fetch] loading {url}", flush=True)
+    start = time.monotonic()
     page = await browser.new_page()
     try:
         await page.route("**/*", _block_unnecessary_resources)
-        await page.goto(url, timeout=timeout_ms)
-        return await page.content()
+        await page.goto(url, timeout=timeout_ms, wait_until="domcontentloaded")
+        html = await page.content()
+        print(f"  [fetch] done in {time.monotonic() - start:.2f}s", flush=True)
+        return html
     except Exception as error:  # noqa: BLE001 - re-raised as a typed error
         raise PageLoadError(url, error) from error
     finally:

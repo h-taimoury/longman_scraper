@@ -58,7 +58,7 @@ class Sense:
     definition: str
 
     lex_unit: str | None = None
-    """e.g. "in my book" — the specific phrase this sense defines, if any."""
+    """sth like: "in advance (of something)" or "be obsessing about/over" — the specific phrase this sense defines, if any."""
 
     geo: str | None = None
     """Regional label, e.g. "British English"."""
@@ -79,7 +79,7 @@ class Sense:
 
 @dataclass
 class Entry:
-    """One dictionary entry: a single word + part-of-speech block.
+    """One dictionary entry: a single part-of-speech block of a word.
 
     An entry groups together every Sense that shares the same head word,
     pronunciation, and part of speech (e.g. all the noun senses of "book").
@@ -91,8 +91,8 @@ class Entry:
     part_of_speech: str
     pronunciation: Pronunciation
     frequency: list[Frequency] = field(default_factory=list)
-    inflections: str | None = None
-    register: str | None = None
+    inflections: str | None = None  # sth like: "(grabbed, grabbing)"
+    register: str | None = None  # sth like: "spoken informal"
     senses: list[Sense] = field(default_factory=list)
 
 

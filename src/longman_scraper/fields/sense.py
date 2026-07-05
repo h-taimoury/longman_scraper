@@ -26,7 +26,9 @@ def parse_sense_number(sense_el: Tag, *, has_multiple_senses: bool) -> str | Non
     return text or None
 
 
-def build_title(word: str, part_of_speech: str, index: int, *, has_multiple_senses: bool) -> str:
+def build_title(
+    word: str, part_of_speech: str, index: int, *, has_multiple_senses: bool
+) -> str:
     """Build a stable identifier like "book_noun_2", matching the admin UI."""
     if not has_multiple_senses:
         return word
@@ -36,6 +38,7 @@ def build_title(word: str, part_of_speech: str, index: int, *, has_multiple_sens
 
 
 def parse_lex_unit(sense_el: Tag) -> str | None:
+    """lex unit is sth like "in advance (of something)" or "be obsessing about/over" — the specific phrase this sense defines, if any"""
     lex_unit_el = sense_el.find("span", class_="LEXUNIT", recursive=False)
     if lex_unit_el is None:
         return None

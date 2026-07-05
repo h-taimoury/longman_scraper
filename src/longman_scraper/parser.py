@@ -19,7 +19,9 @@ DICTENTRY_SELECTOR = "div.dictionary span.dictentry"
 
 
 async def parse_word_page(html: str, browser: Browser, base_url: str) -> list[Entry]:
-    """Parse a word page's HTML into a list of non-business Entry objects."""
+    """Parse a word page's HTML into a list of non-business Entry objects.
+    Remember that an entry is a single part-of-speech block of a word, and that a word page may contain multiple entries (e.g. "book" has noun and verb entries).
+    """
     soup = BeautifulSoup(html, "lxml")
     dictentry_els = soup.select(DICTENTRY_SELECTOR)
 
@@ -34,6 +36,10 @@ async def parse_word_page(html: str, browser: Browser, base_url: str) -> list[En
             dictentry_el, browser, base_url, shared_pronunciation
         )
         if entry is not None:
+            print(
+                f"[entry] {entry.word} ({entry.part_of_speech}) - {len(entry.senses)} senses",
+                flush=True,
+            )
             entries.append(entry)
 
     return entries
@@ -76,9 +82,16 @@ async def _parse_entry(
 
     for index, sense_el in enumerate(sense_els, start=1):
         resolved_sense = await _resolve_sense(
-            sense_el, browser, base_url, word, part_of_speech, index, has_multiple_senses
+            sense_el,
+            browser,
+            base_url,
+            word,
+            part_of_speech,
+            index,
+            has_multiple_senses,
         )
         if resolved_sense is not None:
+            print(f"  [sense] {resolved_sense.title}", flush=True)
             entry.senses.append(resolved_sense)
 
     return entry, shared_pronunciation
@@ -101,6 +114,7 @@ async def _resolve_sense(
         url = sense.crossref_target_url(sense_el, base_url)
         if url is None:
             return None
+        print(f"  [crossref] following link to {url}", flush=True)
         resolved = await fetch_cross_reference_sense(browser, url)
         if resolved is None:
             return None

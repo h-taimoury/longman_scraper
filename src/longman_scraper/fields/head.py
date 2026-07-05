@@ -30,6 +30,7 @@ def parse_part_of_speech(entry_el: Tag) -> str:
 
 
 def parse_inflections(entry_el: Tag) -> str | None:
+    """sth like: (grabbed, grabbing)"""
     inflections_el = entry_el.select_one("span.Inflections")
     if inflections_el is None:
         return None
@@ -38,6 +39,8 @@ def parse_inflections(entry_el: Tag) -> str | None:
 
 
 def parse_register(entry_el: Tag) -> str | None:
+    """sth like: 'spoken informal'
+    Note that there are two kinds of registers: the one in the Head block (this function extracts it) and the one in each Sense block. The Head-level register applies to all senses of this entry, while the Sense-level register applies only to that sense. Pay attention to 'span.Head span.REGISTERLAB' that means we are looking for the register of the whole entry under the Head block. Note that the Head block contains the entry level information."""
     register_els = entry_el.select("span.Head span.REGISTERLAB")
     if not register_els:
         return None
