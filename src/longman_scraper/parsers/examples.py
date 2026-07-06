@@ -15,7 +15,8 @@ from ..schema import Example
 
 
 def parse_examples(container: Tag) -> list[Example]:
-    """Extract every Example found directly under `container`.
+    """Extract every Example found directly under `container`, preserving the
+    order in which they appear in the source HTML.
 
     `container` is expected to be a Sense or Subsense element. Only direct
     children are inspected (matching the original site's nesting), so
@@ -23,20 +24,21 @@ def parse_examples(container: Tag) -> list[Example]:
     """
     examples: list[Example] = []
 
-    for example_el in container.find_all("span", class_="EXAMPLE", recursive=False):
-        examples.append(_build_example(example_el))
+    for child in container.find_all("span", recursive=False):
+        classes = child.get("class") or []
 
-    for gram_exa_el in container.find_all("span", class_="GramExa", recursive=False):
-        examples.extend(_parse_gram_exa(gram_exa_el))
-
-    for collo_exa_el in container.find_all("span", class_="ColloExa", recursive=False):
-        examples.extend(_parse_collo_exa(collo_exa_el))
+        if "EXAMPLE" in classes:
+            examples.append(_build_example(child))
+        elif "GramExa" in classes:
+            examples.extend(_parse_gram_exa(child))
+        elif "ColloExa" in classes:
+            examples.extend(_parse_collo_exa(child))
 
     return examples
 
 
-def _build_example(example_el: Tag) -> Example:
-    return Example(kind="example", text=clean_text(example_el.get_text()))
+def _build_example(example_el: Tag, usage: str | None = None) -> Example:
+    return Example(text=clean_text(example_el.get_text()), usage=usage)
 
 
 def _parse_gram_exa(gram_exa_el: Tag) -> list[Example]:
@@ -47,13 +49,14 @@ def _parse_gram_exa(gram_exa_el: Tag) -> list[Example]:
 
     pattern_text = pattern_el.get_text() if pattern_el else ""
     gloss_text = gloss_el.get_text() if gloss_el else ""
+    usage = clean_text(pattern_text + gloss_text) or None
 
-    results = [
-        Example(kind="grammar_pattern", text=clean_text(pattern_text + gloss_text))
+    return [
+        _build_example(example_el, usage=usage)
+        for example_el in gram_exa_el.find_all(
+            "span", class_="EXAMPLE", recursive=False
+        )
     ]
-    for example_el in gram_exa_el.find_all("span", class_="EXAMPLE", recursive=False):
-        results.append(_build_example(example_el))
-    return results
 
 
 def _parse_collo_exa(collo_exa_el: Tag) -> list[Example]:
@@ -62,10 +65,11 @@ def _parse_collo_exa(collo_exa_el: Tag) -> list[Example]:
 
     collo_text = collo_el.get_text() if collo_el else ""
     gloss_text = gloss_el.get_text() if gloss_el else ""
+    usage = clean_text(collo_text + gloss_text) or None
 
-    results = [
-        Example(kind="collocation", text=clean_text(collo_text + gloss_text))
+    return [
+        _build_example(example_el, usage=usage)
+        for example_el in collo_exa_el.find_all(
+            "span", class_="EXAMPLE", recursive=False
+        )
     ]
-    for example_el in collo_exa_el.find_all("span", class_="EXAMPLE", recursive=False):
-        results.append(_build_example(example_el))
-    return results

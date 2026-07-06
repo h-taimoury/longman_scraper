@@ -7,18 +7,17 @@ Django backend) are expected to map these onto their own models.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Literal
-
-# FrequencyLabel = Literal["S1", "S2", "S3", "W1", "W2", "W3"]
-ExampleKind = Literal["example", "collocation", "grammar_pattern"]
 
 
 @dataclass
 class Example:
-    """A single example sentence, collocation, or grammar pattern."""
+    """A single example sentence, optionally tied to a usage pattern
+    (a grammar pattern or a collocation)."""
 
-    kind: ExampleKind
-    text: str
+    text: str  # A single example sentence, e.g. for the word "go", a example text is "Let’s go home."
+    usage: str | None = (
+        None  # The usage pattern this example illustrates. It can be a grammer pattern or a collocation or None (for examples that don't have a grammer or collocation info), e.g. for the word "go", a grammer pattern is "go to" and a collocation is "go by bus/train/car etc".
+    )
 
 
 @dataclass
@@ -34,7 +33,7 @@ class Sense:
     definition: str
 
     lex_unit: str | None = None
-    """sth like: "in advance (of something)" or "be obsessing about/over" — the specific phrase this sense defines, if any."""
+    """sth like: "in advance (of something)" or "be obsessing about/over" — the specific phrase this sense defines, if any. In a sense, the lex unit comes right before definition as a bold text"""
 
     geo: str | None = None
     """Regional label, e.g. "British English"."""

@@ -74,14 +74,14 @@ def test_gram_exa_and_collo_exa_examples(mock_fetch_cross_ref):
     senses_by_title = {s.title: s for s in entries[0].senses}
 
     sense_1 = senses_by_title["book_noun_1"]
-    kinds = [e.kind for e in sense_1.examples]
-    assert "grammar_pattern" in kinds
-    assert "example" in kinds
+    usages = [e.usage for e in sense_1.examples if e.usage]
+    assert any("book about/on" in u for u in usages)
+    assert any(e.usage is None for e in sense_1.examples)
 
     sense_4 = senses_by_title["book_noun_4"]
-    collocation_examples = [e for e in sense_4.examples if e.kind == "collocation"]
+    collocation_examples = [e for e in sense_4.examples if e.usage]
     assert collocation_examples
-    assert "book a table" in collocation_examples[0].text
+    assert "book a table" in collocation_examples[0].usage
 
 
 @patch("longman_scraper.parser.fetch_cross_reference_sense", new_callable=AsyncMock)
