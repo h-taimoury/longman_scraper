@@ -46,7 +46,7 @@ def test_basic_entry_fields(mock_fetch_cross_ref):
     assert entry.pronunciation.british == "/bʊk/"
     assert entry.pronunciation.british_audio_url == "https://example.com/bre.mp3"
     assert entry.pronunciation.american_audio_url == "https://example.com/ame.mp3"
-    assert {f.label for f in entry.frequency} == {"S1", "W1"}
+    assert set(entry.frequency) == {"S1", "W1"}
 
 
 @patch("longman_scraper.parser.fetch_cross_reference_sense", new_callable=AsyncMock)

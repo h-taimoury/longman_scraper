@@ -8,7 +8,7 @@ Public API:
 
 from .api import scrape_word, scrape_words
 from .exceptions import PageLoadError, ScrapeError, WordNotFoundError
-from .schema import Entry, Example, Frequency, Pronunciation, Sense, WordResult
+from .schema import Entry, Example, Sense, WordResult
 
 __all__ = [
     "scrape_word",
@@ -17,8 +17,6 @@ __all__ = [
     "Entry",
     "Sense",
     "Example",
-    "Frequency",
-    "Pronunciation",
     "ScrapeError",
     "WordNotFoundError",
     "PageLoadError",

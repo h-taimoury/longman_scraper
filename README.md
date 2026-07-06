@@ -49,7 +49,7 @@ WordResult
     ├── word: str
     ├── part_of_speech: str
     ├── pronunciation: Pronunciation
-    ├── frequency: list[Frequency]
+    ├── frequency: list[FrequencyLabel]  # e.g. ["S1", "W3"]; one of S1/S2/S3/W1/W2/W3
     ├── inflections: str | None
     └── senses: list[Sense]
         ├── sense_number: str | None

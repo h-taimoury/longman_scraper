@@ -9,32 +9,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Literal
 
+# FrequencyLabel = Literal["S1", "S2", "S3", "W1", "W2", "W3"]
 ExampleKind = Literal["example", "collocation", "grammar_pattern"]
-
-
-@dataclass
-class Frequency:
-    """One frequency band shown next to a head word, e.g. S1 / W1."""
-
-    label: str
-    """Short code, e.g. "S1"."""
-
-    description: str
-    """Human-readable meaning, e.g. "Top 1000 spoken words"."""
-
-
-@dataclass
-class Pronunciation:
-    """British/American pronunciation info for a head word."""
-
-    british: str | None = None
-    """IPA pronunciation, e.g. "/bʊk/"."""
-
-    american: str | None = None
-    """IPA pronunciation if it differs from British; otherwise None."""
-
-    british_audio_url: str | None = None
-    american_audio_url: str | None = None
 
 
 @dataclass
@@ -89,8 +65,8 @@ class Entry:
 
     word: str
     part_of_speech: str
-    pronunciation: Pronunciation
-    frequency: list[Frequency] = field(default_factory=list)
+    pronunciation: str | None
+    frequency: list[str] = field(default_factory=list)
     inflections: str | None = None  # sth like: "(grabbed, grabbing)"
     register: str | None = None  # sth like: "spoken informal"
     senses: list[Sense] = field(default_factory=list)

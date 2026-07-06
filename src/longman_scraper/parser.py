@@ -11,9 +11,9 @@ from bs4 import BeautifulSoup
 from bs4.element import Tag
 from playwright.async_api import Browser
 
-from .fields import head, sense
-from .fields.crossref import fetch_cross_reference_sense
-from .schema import Entry, Pronunciation, Sense
+from .parsers import head, sense
+from .parsers.crossref import fetch_cross_reference_sense
+from .schema import Entry, Sense
 
 DICTENTRY_SELECTOR = "div.dictionary span.dictentry"
 
@@ -25,7 +25,7 @@ async def parse_word_page(html: str, browser: Browser, base_url: str) -> list[En
     soup = BeautifulSoup(html, "lxml")
     dictentry_els = soup.select(DICTENTRY_SELECTOR)
 
-    shared_pronunciation: Pronunciation | None = None
+    shared_pronunciation: str | None = None
     entries: list[Entry] = []
 
     for dictentry_el in dictentry_els:
@@ -54,8 +54,8 @@ async def _parse_entry(
     entry_el: Tag,
     browser: Browser,
     base_url: str,
-    shared_pronunciation: Pronunciation | None,
-) -> tuple[Entry | None, Pronunciation | None]:
+    shared_pronunciation: str | None,
+) -> tuple[Entry | None, str | None]:
     word = head.parse_word(entry_el)
     if not word:
         return None, shared_pronunciation
@@ -64,8 +64,7 @@ async def _parse_entry(
     if pronunciation is not None:
         shared_pronunciation = pronunciation
     else:
-        pronunciation = shared_pronunciation or Pronunciation()
-
+        pronunciation = shared_pronunciation
     part_of_speech = head.parse_part_of_speech(entry_el)
 
     entry = Entry(
