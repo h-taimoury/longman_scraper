@@ -126,3 +126,12 @@ def crossref_target_url(sense_el: Tag, base_url: str) -> str | None:
     if not href:
         return None
     return base_url.rstrip("/") + href
+
+
+def crossref_label(sense_el: Tag) -> str | None:
+    """Extract the link text of a cross-reference, e.g. "books" from "→ books"."""
+    link_el = sense_el.select_one("span.Crossref a.crossRef")
+    if link_el is None:
+        return None
+    text = clean_text(link_el.get_text())
+    return text or None

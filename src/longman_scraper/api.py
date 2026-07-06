@@ -50,4 +50,4 @@ async def _scrape_word_with_browser(word: str, browser) -> WordResult:  # type: 
     if not entries:
         raise WordNotFoundError(word, url)
 
-    return WordResult(word=word, source_url=url, entries=entries)
+    return WordResult(word=word, entries=entries)

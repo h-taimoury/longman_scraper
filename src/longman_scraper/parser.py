@@ -105,21 +105,19 @@ async def _resolve_sense(
     index: int,
     has_multiple_senses: bool,
 ) -> Sense | None:
-    is_cross_reference = False
-    cross_reference_source_url: str | None = None
     target_sense_el = sense_el
+    crossref_label: str | None = None
 
     if sense.is_cross_reference_only(sense_el):
         url = sense.crossref_target_url(sense_el, base_url)
         if url is None:
             return None
+        crossref_label = sense.crossref_label(sense_el)
         print(f"  [crossref] following link to {url}", flush=True)
         resolved = await fetch_cross_reference_sense(browser, url)
         if resolved is None:
             return None
         target_sense_el = resolved
-        is_cross_reference = True
-        cross_reference_source_url = url
 
     title = sense.build_title(
         word, part_of_speech, index, has_multiple_senses=has_multiple_senses
@@ -131,12 +129,10 @@ async def _resolve_sense(
         ),
         title=title,
         definition=sense.parse_definition(target_sense_el),
-        lex_unit=sense.parse_lex_unit(target_sense_el),
+        lex_unit=crossref_label or sense.parse_lex_unit(target_sense_el),
         geo=sense.parse_geo(target_sense_el),
         register=sense.parse_sense_register(target_sense_el),
         synonyms=sense.parse_synonyms(target_sense_el),
         opposites=sense.parse_opposites(target_sense_el),
         examples=sense.parse_sense_examples(target_sense_el),
-        is_cross_reference=is_cross_reference,
-        cross_reference_source_url=cross_reference_source_url,
     )

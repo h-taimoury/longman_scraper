@@ -45,12 +45,6 @@ class Sense:
     opposites: list[str] = field(default_factory=list)
     examples: list[Example] = field(default_factory=list)
 
-    is_cross_reference: bool = False
-    """True if this sense was resolved by following a "→ see X" link."""
-
-    cross_reference_source_url: str | None = None
-    """The URL the sense was fetched from, if is_cross_reference is True."""
-
 
 @dataclass
 class Entry:
@@ -76,5 +70,4 @@ class WordResult:
     """Top-level result of scraping a single word."""
 
     word: str
-    source_url: str
     entries: list[Entry] = field(default_factory=list)
