@@ -10,7 +10,7 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 from typing import AsyncIterator
 
-from playwright.async_api import Browser, async_playwright
+from playwright.async_api import Browser, async_playwright, Page
 
 from .exceptions import PageLoadError
 import time
@@ -36,16 +36,20 @@ async def launch_browser(*, headless: bool = True) -> AsyncIterator[Browser]:
             await browser.close()
 
 
-async def fetch_html(
+async def open_word_page(
     browser: Browser,
     url: str,
     *,
     timeout_ms: int = DEFAULT_TIMEOUT_MS,
-) -> str:
-    """Navigate to `url` in a fresh page and return the rendered HTML.
+) -> Page:
+    """Navigate to `url` in a fresh page and return the live Page.
 
-    Images, stylesheets, fonts, and media are blocked to speed up loading,
-    since only the parsed DOM/text content is needed.
+    Unlike `fetch_html`, the page is left open — audio downloads (see
+    `audio.download_audio`) run `fetch()` inside this same page's JS
+    context, and need the exact page/session that loaded the dictionary
+    entry rather than a fresh one, to inherit the browser's fingerprint.
+
+    The caller is responsible for closing the returned page.
     """
     print(f"  [fetch] loading {url}", flush=True)
     start = time.monotonic()
@@ -53,11 +57,27 @@ async def fetch_html(
     try:
         await page.route("**/*", _block_unnecessary_resources)
         await page.goto(url, timeout=timeout_ms, wait_until="domcontentloaded")
-        html = await page.content()
         print(f"  [fetch] done in {time.monotonic() - start:.2f}s", flush=True)
-        return html
+        return page
     except Exception as error:  # noqa: BLE001 - re-raised as a typed error
+        await page.close()
         raise PageLoadError(url, error) from error
+
+
+async def fetch_html(
+    browser: Browser,
+    url: str,
+    *,
+    timeout_ms: int = DEFAULT_TIMEOUT_MS,
+) -> str:
+    """Navigate to `url` and return the rendered HTML, closing the page after.
+
+    Used by the cross-reference resolver, which only needs HTML and has no
+    further use for the page (no audio to download from a cross-ref target).
+    """
+    page = await open_word_page(browser, url, timeout_ms=timeout_ms)
+    try:
+        return await page.content()
     finally:
         await page.close()
 

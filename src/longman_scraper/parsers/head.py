@@ -66,3 +66,19 @@ def parse_pronunciation(entry_el: Tag) -> str | None:
     if pron_codes_el is None:
         return None
     return clean_text(pron_codes_el.get_text()) or None
+
+
+def has_own_pronunciation(entry_el: Tag) -> bool:
+    """True if this entry has its own PronCodes block (not inherited from
+    a neighboring entry)."""
+    return entry_el.select_one("span.Head > span.PronCodes") is not None
+
+
+def parse_audio_urls(entry_el: Tag) -> tuple[str | None, str | None]:
+    """Extract (british_audio_url, american_audio_url) from the speaker
+    icons in the Head block. Returns (None, None) if absent."""
+    bre_el = entry_el.select_one("span.Head span.speaker.brefile")
+    ame_el = entry_el.select_one("span.Head span.speaker.amefile")
+    british_url = bre_el.get("data-src-mp3") if bre_el else None
+    american_url = ame_el.get("data-src-mp3") if ame_el else None
+    return british_url, american_url

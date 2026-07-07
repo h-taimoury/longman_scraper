@@ -23,3 +23,12 @@ class PageLoadError(ScrapeError):
         self.url = url
         self.original_error = original_error
         super().__init__(f"Failed to load {url}: {original_error}")
+
+
+class AudioDownloadError(ScrapeError):
+    """Raised when a pronunciation audio file fails to download."""
+
+    def __init__(self, url: str, original_error: Exception) -> None:
+        self.url = url
+        self.original_error = original_error
+        super().__init__(f"Failed to download audio from {url}: {original_error}")

@@ -3,36 +3,55 @@
 Business-dictionary entries are excluded unconditionally here — an entry
 whose markup contains a "bussdictEntry" wrapper is never turned into an
 Entry, full stop. There is no flag to opt back into them.
+
+Parsing happens in two phases:
+  1. Pronunciation/audio resolution across *all* non-business entries at
+     once (see parsers/pronunciation.py) — this has to happen first, since
+     naming/grouping the audio files depends on seeing every entry.
+  2. Per-entry field parsing (senses, examples, etc.), using each entry's
+     resolved PronunciationGroup from phase 1.
 """
 
 from __future__ import annotations
 
 from bs4 import BeautifulSoup
 from bs4.element import Tag
-from playwright.async_api import Browser
+from playwright.async_api import Browser, Page
 
 from .parsers import head, sense
 from .parsers.crossref import fetch_cross_reference_sense
+from .parsers.pronunciation import PronunciationGroup, resolve_pronunciations
 from .schema import Entry, Sense
 
+DICTENTRY_SELECTOR = "div.dictionary span.dictentry"
 
-async def parse_word_page(html: str, browser: Browser, base_url: str) -> list[Entry]:
+
+async def parse_word_page(
+    html: str,
+    browser: Browser,
+    page: Page,
+    base_url: str,
+    word: str,
+    audio_dir: str,
+) -> list[Entry]:
     """Parse a word page's HTML into a list of non-business Entry objects.
-    Remember that an entry is a single part-of-speech block of a word, and that a word page may contain multiple entries (e.g. "book" has noun and verb entries).
+
+    `page` must be the live Playwright page that loaded this HTML (audio
+    downloads run inside its JS context). `word` is the originally-searched
+    word, used as the base for audio filenames — not each entry's own
+    parsed word text, which can differ (e.g. "Hello!" vs "hello").
     """
     soup = BeautifulSoup(html, "lxml")
-    entry_els = soup.select("div.dictionary span.dictentry")
+    dictentry_els = soup.select(DICTENTRY_SELECTOR)
+    non_business_els = [el for el in dictentry_els if not _is_business_entry(el)]
 
-    shared_pronunciation: str | None = None
+    pronunciation_groups = await resolve_pronunciations(
+        non_business_els, page, audio_dir, word
+    )
+
     entries: list[Entry] = []
-
-    for entry_el in entry_els:
-        if _is_business_entry(entry_el):
-            continue
-
-        entry, shared_pronunciation = await _parse_entry(
-            entry_el, browser, base_url, shared_pronunciation
-        )
+    for entry_el, pron_group in zip(non_business_els, pronunciation_groups):
+        entry = await _parse_entry(entry_el, browser, base_url, pron_group)
         if entry is not None:
             print(
                 f"[entry] {entry.word} ({entry.part_of_speech}) - {len(entry.senses)} senses",
@@ -43,32 +62,35 @@ async def parse_word_page(html: str, browser: Browser, base_url: str) -> list[En
     return entries
 
 
-def _is_business_entry(entry_el: Tag) -> bool:
+def _is_business_entry(dictentry_el: Tag) -> bool:
     """A dictentry is a business-dictionary block if it wraps a bussdictEntry."""
-    return entry_el.find(class_="bussdictEntry") is not None
+    return dictentry_el.find(class_="bussdictEntry") is not None
 
 
 async def _parse_entry(
     entry_el: Tag,
     browser: Browser,
     base_url: str,
-    shared_pronunciation: str | None,
-) -> tuple[Entry | None, str | None]:
+    pronunciation_group: PronunciationGroup | None,
+) -> Entry | None:
     word = head.parse_word(entry_el)
     if not word:
-        return None, shared_pronunciation
+        return None
 
-    pronunciation = head.parse_pronunciation(entry_el)
-    if pronunciation is not None:
-        shared_pronunciation = pronunciation
-    else:
-        pronunciation = shared_pronunciation
     part_of_speech = head.parse_part_of_speech(entry_el)
 
     entry = Entry(
         word=word,
         part_of_speech=part_of_speech,
-        pronunciation=pronunciation,
+        pronunciation=(
+            pronunciation_group.pronunciation_text if pronunciation_group else None
+        ),
+        br_pronunciation_audio=(
+            pronunciation_group.br_pronunciation_audio if pronunciation_group else None
+        ),
+        am_pronunciation_audio=(
+            pronunciation_group.am_pronunciation_audio if pronunciation_group else None
+        ),
         frequency=head.parse_frequency(entry_el),
         inflections=head.parse_inflections(entry_el),
         register=head.parse_register(entry_el),
@@ -91,7 +113,7 @@ async def _parse_entry(
             print(f"  [sense] {resolved_sense.title}", flush=True)
             entry.senses.append(resolved_sense)
 
-    return entry, shared_pronunciation
+    return entry
 
 
 async def _resolve_sense(

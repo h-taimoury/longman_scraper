@@ -48,20 +48,17 @@ class Sense:
 
 @dataclass
 class Entry:
-    """One dictionary entry: a single part-of-speech block of a word.
-
-    An entry groups together every Sense that shares the same head word,
-    pronunciation, and part of speech (e.g. all the noun senses of "book").
-    Business-dictionary entries are never represented here — they are
-    excluded entirely during parsing.
-    """
-
     word: str
     part_of_speech: str
     pronunciation: str | None
+    br_pronunciation_audio: str | None = None
+    """Filename of the saved British audio, e.g. "book_Br.mp3", relative to
+    the audio_dir passed to scrape_word/scrape_words. None if unavailable."""
+    am_pronunciation_audio: str | None = None
+    """Filename of the saved American audio, e.g. "book_Am.mp3"."""
     frequency: list[str] = field(default_factory=list)
-    inflections: str | None = None  # sth like: "(grabbed, grabbing)"
-    register: str | None = None  # sth like: "spoken informal"
+    inflections: str | None = None
+    register: str | None = None
     senses: list[Sense] = field(default_factory=list)
 
 
