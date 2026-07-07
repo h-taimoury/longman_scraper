@@ -15,25 +15,23 @@ from .parsers import head, sense
 from .parsers.crossref import fetch_cross_reference_sense
 from .schema import Entry, Sense
 
-DICTENTRY_SELECTOR = "div.dictionary span.dictentry"
-
 
 async def parse_word_page(html: str, browser: Browser, base_url: str) -> list[Entry]:
     """Parse a word page's HTML into a list of non-business Entry objects.
     Remember that an entry is a single part-of-speech block of a word, and that a word page may contain multiple entries (e.g. "book" has noun and verb entries).
     """
     soup = BeautifulSoup(html, "lxml")
-    dictentry_els = soup.select(DICTENTRY_SELECTOR)
+    entry_els = soup.select("div.dictionary span.dictentry")
 
     shared_pronunciation: str | None = None
     entries: list[Entry] = []
 
-    for dictentry_el in dictentry_els:
-        if _is_business_entry(dictentry_el):
+    for entry_el in entry_els:
+        if _is_business_entry(entry_el):
             continue
 
         entry, shared_pronunciation = await _parse_entry(
-            dictentry_el, browser, base_url, shared_pronunciation
+            entry_el, browser, base_url, shared_pronunciation
         )
         if entry is not None:
             print(
@@ -45,9 +43,9 @@ async def parse_word_page(html: str, browser: Browser, base_url: str) -> list[En
     return entries
 
 
-def _is_business_entry(dictentry_el: Tag) -> bool:
+def _is_business_entry(entry_el: Tag) -> bool:
     """A dictentry is a business-dictionary block if it wraps a bussdictEntry."""
-    return dictentry_el.find(class_="bussdictEntry") is not None
+    return entry_el.find(class_="bussdictEntry") is not None
 
 
 async def _parse_entry(
