@@ -47,15 +47,26 @@ class Sense:
 
 
 @dataclass
+class Pronunciation:
+    """Resolved pronunciation data for an Entry — shared across every entry
+    in the same pronunciation group (see parsers/pronunciation.py)."""
+
+    text: str | None
+    """The pronunciation text, e.g. "/bʊk/"."""
+
+    br_audio: str | None = None
+    """Filename of the saved British audio, e.g. "book_Br.mp3", relative to
+    the audio_dir passed to scrape_word/scrape_words. None if unavailable."""
+
+    am_audio: str | None = None
+    """Filename of the saved American audio, e.g. "book_Am.mp3"."""
+
+
+@dataclass
 class Entry:
     word: str
     part_of_speech: str
-    pronunciation: str | None
-    br_pronunciation_audio: str | None = None
-    """Filename of the saved British audio, e.g. "book_Br.mp3", relative to
-    the audio_dir passed to scrape_word/scrape_words. None if unavailable."""
-    am_pronunciation_audio: str | None = None
-    """Filename of the saved American audio, e.g. "book_Am.mp3"."""
+    pronunciation: Pronunciation | None
     frequency: list[str] = field(default_factory=list)
     inflections: str | None = None
     register: str | None = None

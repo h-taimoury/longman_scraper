@@ -5,13 +5,14 @@ from .exceptions import (
     ScrapeError,
     WordNotFoundError,
 )
-from .schema import Entry, Example, Sense, WordResult
+from .schema import Entry, Example, Pronunciation, Sense, WordResult
 
 __all__ = [
     "scrape_word",
     "scrape_words",
     "WordResult",
     "Entry",
+    "Pronunciation",
     "Sense",
     "Example",
     "ScrapeError",

@@ -1,17 +1,3 @@
-"""Top-level parsing: turns a word page's HTML into a list of Entry objects.
-
-Business-dictionary entries are excluded unconditionally here — an entry
-whose markup contains a "bussdictEntry" wrapper is never turned into an
-Entry, full stop. There is no flag to opt back into them.
-
-Parsing happens in two phases:
-  1. Pronunciation/audio resolution across *all* non-business entries at
-     once (see parsers/pronunciation.py) — this has to happen first, since
-     naming/grouping the audio files depends on seeing every entry.
-  2. Per-entry field parsing (senses, examples, etc.), using each entry's
-     resolved PronunciationGroup from phase 1.
-"""
-
 from __future__ import annotations
 
 from bs4 import BeautifulSoup
@@ -20,8 +6,8 @@ from playwright.async_api import Browser, Page
 
 from .parsers import head, sense
 from .parsers.crossref import fetch_cross_reference_sense
-from .parsers.pronunciation import PronunciationGroup, resolve_pronunciations
-from .schema import Entry, Sense
+from .parsers.pronunciation import resolve_pronunciations
+from .schema import Entry, Pronunciation, Sense
 
 DICTENTRY_SELECTOR = "div.dictionary span.dictentry"
 
@@ -45,13 +31,13 @@ async def parse_word_page(
     dictentry_els = soup.select(DICTENTRY_SELECTOR)
     non_business_els = [el for el in dictentry_els if not _is_business_entry(el)]
 
-    pronunciation_groups = await resolve_pronunciations(
+    pronunciations = await resolve_pronunciations(
         non_business_els, page, audio_dir, word
     )
 
     entries: list[Entry] = []
-    for entry_el, pron_group in zip(non_business_els, pronunciation_groups):
-        entry = await _parse_entry(entry_el, browser, base_url, pron_group)
+    for entry_el, pronunciation in zip(non_business_els, pronunciations):
+        entry = await _parse_entry(entry_el, browser, base_url, pronunciation)
         if entry is not None:
             print(
                 f"[entry] {entry.word} ({entry.part_of_speech}) - {len(entry.senses)} senses",
@@ -71,7 +57,7 @@ async def _parse_entry(
     entry_el: Tag,
     browser: Browser,
     base_url: str,
-    pronunciation_group: PronunciationGroup | None,
+    pronunciation: Pronunciation | None,
 ) -> Entry | None:
     word = head.parse_word(entry_el)
     if not word:
@@ -82,15 +68,7 @@ async def _parse_entry(
     entry = Entry(
         word=word,
         part_of_speech=part_of_speech,
-        pronunciation=(
-            pronunciation_group.pronunciation_text if pronunciation_group else None
-        ),
-        br_pronunciation_audio=(
-            pronunciation_group.br_pronunciation_audio if pronunciation_group else None
-        ),
-        am_pronunciation_audio=(
-            pronunciation_group.am_pronunciation_audio if pronunciation_group else None
-        ),
+        pronunciation=pronunciation,
         frequency=head.parse_frequency(entry_el),
         inflections=head.parse_inflections(entry_el),
         register=head.parse_register(entry_el),

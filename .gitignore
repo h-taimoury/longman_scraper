@@ -3,6 +3,9 @@
 venv/
 env/
 
+# Static files
+pronunciation_audios/
+
 # Python bytecode/cache
 __pycache__/
 *.pyc

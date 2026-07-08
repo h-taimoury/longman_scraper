@@ -1,4 +1,4 @@
-"""Resolves pronunciation groups across all non-business entries of a word,
+"""Resolves pronunciation across all non-business entries of a word,
 including downloading British/American audio files.
 
 An entry's phonetics can be omitted from the markup when identical to a
@@ -27,26 +27,15 @@ the part of speech of the entry that owns that group's phonetics.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
 
 from bs4.element import Tag
 from playwright.async_api import Page
 
 from . import head
 from ..audio import download_audio, save_audio
+from ..schema import Pronunciation
 
 _WHITESPACE = re.compile(r"\s+")
-
-
-@dataclass
-class PronunciationGroup:
-    """Resolved pronunciation data shared by every entry in one group."""
-
-    pronunciation_text: str | None
-    br_audio_url: str | None
-    am_audio_url: str | None
-    br_pronunciation_audio: str | None
-    am_pronunciation_audio: str | None
 
 
 async def resolve_pronunciations(
@@ -54,9 +43,9 @@ async def resolve_pronunciations(
     page: Page,
     audio_dir: str,
     word: str,
-) -> list[PronunciationGroup | None]:
-    """Return a PronunciationGroup per entry in `entry_els` (same order,
-    same length), downloading each group's audio exactly once.
+) -> list[Pronunciation | None]:
+    """Return a Pronunciation per entry in `entry_els` (same order, same
+    length), downloading each group's audio exactly once.
 
     Returns all-None if no entry has its own phonetics at all (nothing to
     resolve or download in that case).
@@ -73,14 +62,14 @@ async def resolve_pronunciations(
     group_indices = _assign_group_indices(own_flags, first_phonetic_idx)
     num_groups = max(group_indices) + 1
 
-    resolved: dict[int, PronunciationGroup] = {}
+    resolved: dict[int, Pronunciation] = {}
     for group_idx in range(num_groups):
         owner_idx = next(
             i
             for i in range(first_phonetic_idx, len(entry_els))
             if group_indices[i] == group_idx and own_flags[i]
         )
-        resolved[group_idx] = await _build_group(
+        resolved[group_idx] = await _build_pronunciation(
             entry_els[owner_idx],
             page,
             audio_dir,
@@ -104,14 +93,14 @@ def _assign_group_indices(own_flags: list[bool], first_phonetic_idx: int) -> lis
     return group_indices
 
 
-async def _build_group(
+async def _build_pronunciation(
     owner_el: Tag,
     page: Page,
     audio_dir: str,
     word: str,
     *,
     is_only_group: bool,
-) -> PronunciationGroup:
+) -> Pronunciation:
     pronunciation_text = head.parse_pronunciation(owner_el)
     br_url, am_url = head.parse_audio_urls(owner_el)
 
@@ -131,12 +120,10 @@ async def _build_group(
         data = await download_audio(page, am_url)
         save_audio(audio_dir, am_filename, data)
 
-    return PronunciationGroup(
-        pronunciation_text=pronunciation_text,
-        br_audio_url=br_url,
-        am_audio_url=am_url,
-        br_pronunciation_audio=br_filename,
-        am_pronunciation_audio=am_filename,
+    return Pronunciation(
+        text=pronunciation_text,
+        br_audio=br_filename,
+        am_audio=am_filename,
     )
 
 

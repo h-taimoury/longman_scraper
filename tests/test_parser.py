@@ -53,9 +53,6 @@ def test_business_entries_are_excluded(
     assert all("ACCOUNT BOOKS" not in s.synonyms for s in entries[0].senses)
 
 
-@patch("longman_scraper.parsers.pronunciation.save_audio")
-@patch("longman_scraper.parsers.pronunciation.download_audio", new_callable=AsyncMock)
-@patch("longman_scraper.parser.fetch_cross_reference_sense", new_callable=AsyncMock)
 def test_basic_entry_fields(mock_fetch_cross_ref, mock_download_audio, mock_save_audio):
     mock_fetch_cross_ref.return_value = None
     mock_download_audio.return_value = b"fake-audio-bytes"
@@ -65,13 +62,10 @@ def test_basic_entry_fields(mock_fetch_cross_ref, mock_download_audio, mock_save
     entry = entries[0]
 
     assert entry.word == "book"
-    assert entry.pronunciation == "/bʊk/"
+    assert entry.pronunciation.text == "/bʊk/"
     assert set(entry.frequency) == {"S1", "W1"}
 
 
-@patch("longman_scraper.parsers.pronunciation.save_audio")
-@patch("longman_scraper.parsers.pronunciation.download_audio", new_callable=AsyncMock)
-@patch("longman_scraper.parser.fetch_cross_reference_sense", new_callable=AsyncMock)
 def test_audio_files_named_without_pos_when_single_group(
     mock_fetch_cross_ref, mock_download_audio, mock_save_audio
 ):
@@ -84,8 +78,8 @@ def test_audio_files_named_without_pos_when_single_group(
     entries = _parse(html)
     entry = entries[0]
 
-    assert entry.br_pronunciation_audio == "book_Br.mp3"
-    assert entry.am_pronunciation_audio == "book_Am.mp3"
+    assert entry.pronunciation.br_audio == "book_Br.mp3"
+    assert entry.pronunciation.am_audio == "book_Am.mp3"
     mock_save_audio.assert_any_call(
         "./test_audio_output", "book_Br.mp3", b"fake-audio-bytes"
     )
