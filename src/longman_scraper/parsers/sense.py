@@ -26,15 +26,40 @@ def parse_sense_number(sense_el: Tag, *, has_multiple_senses: bool) -> str | Non
     return text or None
 
 
+_PART_OF_SPEECH_ABBREVIATIONS: dict[str, str] = {
+    "noun": "n",
+    "verb": "v",
+    "adjective": "adj",
+    "adverb": "adv",
+    "preposition": "prep",
+    "conjunction": "conj",
+    "pronoun": "pron",
+    "determiner": "det",
+    "predeterminer": "predet",
+    "number": "num",
+    "interjection": "interj",
+    "exclamation": "exclam",
+    "phrasal verb": "pv",
+    "auxiliary verb": "aux",
+    "modal verb": "modal",
+    "linking verb": "linkv",
+}
+
+
+def _abbreviate_part_of_speech(part_of_speech: str) -> str:
+    """Look up the short form for `part_of_speech`; fall back to the
+    part-of-speech string itself if it isn't in the table."""
+    return _PART_OF_SPEECH_ABBREVIATIONS.get(part_of_speech, part_of_speech)
+
+
 def build_title(
     word: str, part_of_speech: str, index: int, *, has_multiple_senses: bool
 ) -> str:
-    """Build a stable identifier like "book_noun_2", matching the admin UI."""
+    """Build a stable identifier like "book_n_2" """
+    abbreviation = _abbreviate_part_of_speech(part_of_speech)
     if not has_multiple_senses:
-        return word
-    if part_of_speech == "phrasal verb":
-        return f"{word}_{index}"
-    return f"{word}_{part_of_speech}_{index}"
+        return f"{word}_{abbreviation}"
+    return f"{word}_{abbreviation}_{index}"
 
 
 def parse_lex_unit(sense_el: Tag) -> str | None:

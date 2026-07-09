@@ -53,7 +53,7 @@ WordResult
     ├── inflections: str | None
     └── senses: list[Sense]
         ├── sense_number: str | None
-        ├── title: str                  # e.g. "head_noun_2"
+        ├── title: str                  # e.g. "head_n_2"
         ├── lex_unit: str | None
         ├── definition: str
         ├── geo: str | None

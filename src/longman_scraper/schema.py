@@ -28,7 +28,7 @@ class Sense:
     """e.g. "1", "2"; None if the entry has only a single, unnumbered sense."""
 
     title: str
-    """Stable identifier for this sense, e.g. "book_noun_2"."""
+    """Stable identifier for this sense, e.g. "book_n_2", the word + part of speech symbol + sense number(if there are multiple senses, none if there's only one sense)."""
 
     definition: str
 

@@ -108,8 +108,8 @@ def test_sense_titles_and_numbers(
     senses = entries[0].senses
 
     titles = [s.title for s in senses]
-    assert "book_noun_1" in titles
-    assert "book_noun_2" in titles
+    assert "book_n_1" in titles
+    assert "book_n_2" in titles
     assert len(senses) == 4  # senses 1, 2, 4, 5 (sense 3 dropped)
 
 
@@ -126,12 +126,12 @@ def test_gram_exa_and_collo_exa_examples(
     entries = _parse(html)
     senses_by_title = {s.title: s for s in entries[0].senses}
 
-    sense_1 = senses_by_title["book_noun_1"]
+    sense_1 = senses_by_title["book_n_1"]
     usages = [e.usage for e in sense_1.examples if e.usage]
     assert any("book about/on" in u for u in usages)
     assert any(e.usage is None for e in sense_1.examples)
 
-    sense_4 = senses_by_title["book_noun_4"]
+    sense_4 = senses_by_title["book_n_4"]
     collocation_examples = [e for e in sense_4.examples if e.usage]
     assert collocation_examples
     assert "book a table" in collocation_examples[0].usage
@@ -150,7 +150,7 @@ def test_subsense_definitions_are_joined(
     entries = _parse(html)
     senses_by_title = {s.title: s for s in entries[0].senses}
 
-    sense_5 = senses_by_title["book_noun_5"]
+    sense_5 = senses_by_title["book_n_5"]
     assert "a" in sense_5.definition
     assert "b" in sense_5.definition
     assert "first meaning" in sense_5.definition
@@ -186,7 +186,7 @@ def test_cross_reference_sense_is_resolved(
     assert len(senses) == 5
 
     resolved_sense = next(s for s in senses if s.definition == "resolved definition")
-    assert resolved_sense.title == "book_noun_3"
+    assert resolved_sense.title == "book_n_3"
     assert any(e.text == "resolved example" for e in resolved_sense.examples)
 
 
