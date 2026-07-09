@@ -60,9 +60,7 @@ WordResult
         ├── register: str | None
         ├── synonyms: list[str]
         ├── opposites: list[str]
-        ├── examples: list[Example]
-        ├── is_cross_reference: bool
-        └── cross_reference_source_url: str | None
+        └── examples: list[Example]
 ```
 
 See `src/longman_scraper/schema.py` for the full dataclass definitions and
@@ -74,7 +72,13 @@ docstrings.
   scraped or returned — this is hardcoded into entry detection in `parser.py`,
   not a configurable option.
 - Cross-reference senses (e.g. "→ books") are resolved by fetching the target
-  page and re-parsing it; the resulting sense is marked
-  `is_cross_reference=True` with `cross_reference_source_url` set.
+  page and re-parsing it: the target page's first sense that actually has a
+  definition is substituted in place of the pointer. This resolution is
+  transparent to callers — the resulting `Sense` looks like any other sense,
+  with no field marking that it originated from a cross-reference or
+  recording which page it came from.
+- If the target page has no sense with a definition (e.g. it turns out to be
+  another pointer, or the fetch fails), the cross-reference sense is simply
+  dropped rather than included with empty data.
 - `scrape_words` runs all words concurrently via `asyncio.gather`, sharing a
   single browser instance (mirrors the original Node scraper's behavior).

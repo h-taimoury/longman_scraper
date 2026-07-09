@@ -53,6 +53,9 @@ def test_business_entries_are_excluded(
     assert all("ACCOUNT BOOKS" not in s.synonyms for s in entries[0].senses)
 
 
+@patch("longman_scraper.parsers.pronunciation.save_audio")
+@patch("longman_scraper.parsers.pronunciation.download_audio", new_callable=AsyncMock)
+@patch("longman_scraper.parser.fetch_cross_reference_sense", new_callable=AsyncMock)
 def test_basic_entry_fields(mock_fetch_cross_ref, mock_download_audio, mock_save_audio):
     mock_fetch_cross_ref.return_value = None
     mock_download_audio.return_value = b"fake-audio-bytes"
@@ -66,6 +69,9 @@ def test_basic_entry_fields(mock_fetch_cross_ref, mock_download_audio, mock_save
     assert set(entry.frequency) == {"S1", "W1"}
 
 
+@patch("longman_scraper.parsers.pronunciation.save_audio")
+@patch("longman_scraper.parsers.pronunciation.download_audio", new_callable=AsyncMock)
+@patch("longman_scraper.parser.fetch_cross_reference_sense", new_callable=AsyncMock)
 def test_audio_files_named_without_pos_when_single_group(
     mock_fetch_cross_ref, mock_download_audio, mock_save_audio
 ):
@@ -155,9 +161,12 @@ def test_subsense_definitions_are_joined(
 @patch("longman_scraper.parsers.pronunciation.save_audio")
 @patch("longman_scraper.parsers.pronunciation.download_audio", new_callable=AsyncMock)
 @patch("longman_scraper.parser.fetch_cross_reference_sense", new_callable=AsyncMock)
-def test_cross_reference_sense_is_marked_when_resolved(
+def test_cross_reference_sense_is_resolved(
     mock_fetch_cross_ref, mock_download_audio, mock_save_audio
 ):
+    """A cross-reference sense (e.g. "→ books") should be transparently
+    replaced by the target page's first defined sense, with no marker
+    distinguishing it from an ordinary sense."""
     from bs4 import BeautifulSoup
 
     resolved_html = (
@@ -172,13 +181,13 @@ def test_cross_reference_sense_is_marked_when_resolved(
     entries = _parse(html)
     senses = entries[0].senses
 
+    # sense 3 (the pure cross-ref stub) is resolved and kept, so all 5 senses
+    # of book.html are present.
     assert len(senses) == 5
-    cross_ref_senses = [s for s in senses if s.is_cross_reference]
-    assert len(cross_ref_senses) == 1
-    assert cross_ref_senses[0].definition == "resolved definition"
-    assert cross_ref_senses[0].cross_reference_source_url == (
-        BASE_URL + "/dictionary/books"
-    )
+
+    resolved_sense = next(s for s in senses if s.definition == "resolved definition")
+    assert resolved_sense.title == "book_noun_3"
+    assert any(e.text == "resolved example" for e in resolved_sense.examples)
 
 
 if __name__ == "__main__":
