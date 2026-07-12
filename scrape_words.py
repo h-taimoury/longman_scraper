@@ -17,13 +17,15 @@ async def main():
     for word, result in results.items():
         print(f"Done: {word} - {len(result.entries)} entries", flush=True)
 
-    print(
-        json.dumps(
-            {word: asdict(result) for word, result in results.items()},
+    with open("words.json", "w", encoding="utf-8") as f:
+        json.dump(
+            [asdict(result) for result in results.values()],
+            f,
             indent=2,
             ensure_ascii=False,
         )
-    )
+
+    print("Saved to words.json", flush=True)
 
 
 asyncio.run(main())

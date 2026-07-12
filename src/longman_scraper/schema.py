@@ -33,7 +33,7 @@ class Sense:
     definition: str
 
     lex_unit: str | None = None
-    """sth like: "in advance (of something)" or "be obsessing about/over" — the specific phrase this sense defines, if any. In a sense, the lex unit comes right before definition as a bold text"""
+    """sth like: "in advance (of something)" or "be obsessing about/over" — the specific phrase this sense defines, if any. In a sense, the lex unit comes right before definition as a bold text. If a sense contains a cross reference link, the link label is also stored as lex_unit."""
 
     geo: str | None = None
     """Regional label, e.g. "British English"."""

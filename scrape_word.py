@@ -12,7 +12,11 @@ async def main():
     print("Starting scrape...", flush=True)
     result = await scrape_word("hello")
     print("Done:", result.word, len(result.entries), "entries", flush=True)
-    print(json.dumps(asdict(result), indent=2, ensure_ascii=False))
+
+    with open("word.json", "w", encoding="utf-8") as f:
+        json.dump(asdict(result), f, indent=2, ensure_ascii=False)
+
+    print("Saved to word.json", flush=True)
 
 
 asyncio.run(main())

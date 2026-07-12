@@ -1,0 +1,1194 @@
+[
+  {
+    "word": "book",
+    "entries": [
+      {
+        "word": "book",
+        "part_of_speech": "noun",
+        "pronunciation": {
+          "text": "/bʊk/",
+          "br_audio": "book_Br.mp3",
+          "am_audio": "book_Am.mp3"
+        },
+        "frequency": [
+          "S1",
+          "W1"
+        ],
+        "inflections": null,
+        "register": null,
+        "senses": [
+          {
+            "sense_number": "1",
+            "title": "book_n_1",
+            "definition": "a set of printed pages that are held together in a cover so that you can read them",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "I’ve just started reading a book by Graham Greene.",
+                "usage": null
+              },
+              {
+                "text": "a cookery book",
+                "usage": null
+              },
+              {
+                "text": "a book about cats",
+                "usage": "book about/on"
+              }
+            ]
+          },
+          {
+            "sense_number": "2",
+            "title": "book_n_2",
+            "definition": "a set of sheets of paper held together in a cover so that you can write on them",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "a black address book",
+                "usage": null
+              },
+              {
+                "text": "a notebook",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "3",
+            "title": "book_n_3",
+            "definition": "a set of things such as stamps, matches, or tickets, held together inside a paper cover",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "a cheque book",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "4",
+            "title": "book_n_4",
+            "definition": "a) written records of the financial accounts of a business b) the names of people who use a company’s services, or who are sent by a company to work for other people",
+            "lex_unit": "books",
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "An accountant will examine the company’s books.",
+                "usage": null
+              },
+              {
+                "text": "a small firm that is having problems balancing the books (=keeping its profits and spending equal)",
+                "usage": null
+              },
+              {
+                "text": "They have £50 billion worth of orders on the books.",
+                "usage": "on the books"
+              },
+              {
+                "text": "an agent with a lot of popular actors on his books",
+                "usage": "on somebody’s books"
+              }
+            ]
+          },
+          {
+            "sense_number": "5",
+            "title": "book_n_5",
+            "definition": "exactly according to rules or instructions",
+            "lex_unit": "by the book",
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "She feels she has to go by the book and can’t use her creativity.",
+                "usage": null
+              },
+              {
+                "text": "The police were careful to do everything by the book.",
+                "usage": "do/play something by the book"
+              }
+            ]
+          },
+          {
+            "sense_number": "6",
+            "title": "book_n_6",
+            "definition": "a subject that you do not understand or know anything about",
+            "lex_unit": "a closed book",
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "Chemistry is a closed book to me.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "7",
+            "title": "book_n_7",
+            "definition": "used to say that someone is pleased or annoyed with you",
+            "lex_unit": "be in somebody’s good/bad books",
+            "geo": null,
+            "register": "informal",
+            "synonyms": [],
+            "opposites": [],
+            "examples": []
+          },
+          {
+            "sense_number": "8",
+            "title": "book_n_8",
+            "definition": "if a law is on the books, it is part of the set of laws in a country, town, area etc",
+            "lex_unit": "be on the books",
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": []
+          },
+          {
+            "sense_number": "9",
+            "title": "book_n_9",
+            "definition": "one of the parts that a very large book such as the Bible is divided into",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "the Book of Isaiah",
+                "usage": "book of"
+              }
+            ]
+          },
+          {
+            "sense_number": "10",
+            "title": "book_n_10",
+            "definition": "said when giving your opinion",
+            "lex_unit": "in my book",
+            "geo": null,
+            "register": "spoken",
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "In my book, nothing is more important than football.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "11",
+            "title": "book_n_11",
+            "definition": "to punish someone for breaking laws or rules, especially when you have been trying to punish them for a long time",
+            "lex_unit": "bring somebody to book",
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "War criminals must be brought to book.",
+                "usage": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "word": "book",
+        "part_of_speech": "verb",
+        "pronunciation": {
+          "text": "/bʊk/",
+          "br_audio": "book_Br.mp3",
+          "am_audio": "book_Am.mp3"
+        },
+        "frequency": [
+          "S3"
+        ],
+        "inflections": null,
+        "register": null,
+        "senses": [
+          {
+            "sense_number": "1",
+            "title": "book_v_1",
+            "definition": "to make arrangements to stay in a place, eat in a restaurant, go to a theatre etc at a particular time in the future",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "Have you booked a holiday this year?",
+                "usage": null
+              },
+              {
+                "text": "The flight was already fully booked (=no more seats were available).",
+                "usage": null
+              },
+              {
+                "text": "To get tickets, you have to book in advance.",
+                "usage": null
+              },
+              {
+                "text": "The show’s booked solid (=all the tickets have been sold) until February.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "2",
+            "title": "book_v_2",
+            "definition": "to arrange for someone such as a singer to perform on a particular date",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "The band was booked for a benefit show in Los Angeles.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "3",
+            "title": "book_v_3",
+            "definition": "a) if a hotel, restaurant etc is booked up, there are no more rooms, places, seats etc still available b) if someone is booked up, they are extremely busy and have arranged a lot of things they must do",
+            "lex_unit": "be booked up",
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "The courses quickly get booked up.",
+                "usage": null
+              },
+              {
+                "text": "I’m all booked up this week – can we get together next Friday?",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "4",
+            "title": "book_v_4",
+            "definition": "to arrange for someone to go to a hotel, fly on a plane etc",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "I’ve booked you a flight on Saturday.",
+                "usage": null
+              },
+              {
+                "text": "I’ll book you in at the Hilton.",
+                "usage": "book somebody on/in etc"
+              }
+            ]
+          },
+          {
+            "sense_number": "5",
+            "title": "book_v_5",
+            "definition": "to put someone’s name officially in police records, along with the charge made against them",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "Smith was booked on suspicion of attempted murder.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "6",
+            "title": "book_v_6",
+            "definition": "when a referee in a sports game books a player who has broken the rules, he or she officially writes down the player’s name in a book as a punishment",
+            "lex_unit": null,
+            "geo": "British English",
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "word": "separate",
+    "entries": [
+      {
+        "word": "separate",
+        "part_of_speech": "adjective",
+        "pronunciation": {
+          "text": "/ˈsepərət/",
+          "br_audio": "separate_adjective_Br.mp3",
+          "am_audio": "separate_adjective_Am.mp3"
+        },
+        "frequency": [
+          "S2",
+          "W2"
+        ],
+        "inflections": null,
+        "register": null,
+        "senses": [
+          {
+            "sense_number": "1",
+            "title": "separate_adj_1",
+            "definition": "different",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "Use separate knives for raw and cooked meat.",
+                "usage": null
+              },
+              {
+                "text": "My wife and I have separate bank accounts.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "2",
+            "title": "separate_adj_2",
+            "definition": "not related to or not affected by something else",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "That’s a separate issue.",
+                "usage": null
+              },
+              {
+                "text": "He was attacked on two separate occasions.",
+                "usage": null
+              },
+              {
+                "text": "He tries to keep his professional life completely separate from his private life.",
+                "usage": "separate from"
+              }
+            ]
+          },
+          {
+            "sense_number": "3",
+            "title": "separate_adj_3",
+            "definition": "not joined to or touching something else",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "The gym and the sauna are in separate buildings.",
+                "usage": null
+              },
+              {
+                "text": "Keep the fish separate from the other food.",
+                "usage": "separate from"
+              }
+            ]
+          },
+          {
+            "sense_number": "4",
+            "title": "separate_adj_4",
+            "definition": "a) if people go their separate ways, they stop being friends or lovers b) if people who have been travelling together go their separate ways, they start travelling in different directions",
+            "lex_unit": "go your separate ways",
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": []
+          }
+        ]
+      },
+      {
+        "word": "separate",
+        "part_of_speech": "verb",
+        "pronunciation": {
+          "text": "/ˈsepəreɪt/",
+          "br_audio": "separate_verb_Br.mp3",
+          "am_audio": "separate_verb_Am.mp3"
+        },
+        "frequency": [
+          "S2",
+          "W2"
+        ],
+        "inflections": null,
+        "register": null,
+        "senses": [
+          {
+            "sense_number": "1",
+            "title": "separate_v_1",
+            "definition": "if something separates two places or two things, it is between them so that they are not touching each other",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "The lighthouse is separated from the land by a wide channel.",
+                "usage": "separate something from something"
+              }
+            ]
+          },
+          {
+            "sense_number": "2",
+            "title": "separate_v_2",
+            "definition": "to divide or split into different parts, or to make something do this",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "This will keep your dressing from separating.",
+                "usage": null
+              },
+              {
+                "text": "At this point, the satellite separates from its launcher.",
+                "usage": "separate from"
+              },
+              {
+                "text": "Separate the students into four groups.",
+                "usage": "separate something into something"
+              },
+              {
+                "text": "First, separate the eggs (=divide the white part from the yellow part).",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "3",
+            "title": "separate_v_3",
+            "definition": "if two people who are married or have been living together separate, they start to live apart",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "Jill and John separated a year ago.",
+                "usage": null
+              },
+              {
+                "text": "I decided to separate from my partner.",
+                "usage": "separate from"
+              }
+            ]
+          },
+          {
+            "sense_number": "4",
+            "title": "separate_v_4",
+            "definition": "to recognize that one thing or idea is different from another",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "She finds it difficult to separate fact from fantasy.",
+                "usage": "separate something from something"
+              }
+            ]
+          },
+          {
+            "sense_number": "5",
+            "title": "separate_v_5",
+            "definition": "if people separate, or if someone or something separates them, they move apart",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "Ed stepped in to separate the two dogs.",
+                "usage": null
+              },
+              {
+                "text": "In the fog, they got separated from the group.",
+                "usage": "separate somebody from somebody/something"
+              }
+            ]
+          },
+          {
+            "sense_number": "6",
+            "title": "separate_v_6",
+            "definition": "to be the quality or fact that makes someone or something different from other people or things",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "The capacity to think separates humans from animals.",
+                "usage": "separate something from something"
+              }
+            ]
+          },
+          {
+            "sense_number": "7",
+            "title": "separate_v_7",
+            "definition": "if an amount separates two things, one thing is better or older than the other by that amount",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "Three points now separate the two teams.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "8",
+            "title": "separate_v_8",
+            "definition": "to show clearly which people are brave, strong, or skilled, and which are not",
+            "lex_unit": "separate the men from the boys",
+            "geo": null,
+            "register": "informal",
+            "synonyms": [],
+            "opposites": [],
+            "examples": []
+          },
+          {
+            "sense_number": "9",
+            "title": "separate_v_9",
+            "definition": "to find out which people are intelligent, skilful, successful etc, and which are not",
+            "lex_unit": "separate the sheep from the goats",
+            "geo": "British English",
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "This test should really separate the sheep from the goats.",
+                "usage": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "word": "drive",
+    "entries": [
+      {
+        "word": "drive",
+        "part_of_speech": "verb",
+        "pronunciation": {
+          "text": "/draɪv/",
+          "br_audio": "drive_Br.mp3",
+          "am_audio": "drive_Am.mp3"
+        },
+        "frequency": [
+          "S1",
+          "W1"
+        ],
+        "inflections": "(past tense drove /drəʊv $ droʊv/, past participle driven /ˈdrɪvən/)",
+        "register": null,
+        "senses": [
+          {
+            "sense_number": "1",
+            "title": "drive_v_1",
+            "definition": "a) to make a car, truck, bus etc move along b) if a car, truck etc drives somewhere, it moves there c) if people drive somewhere, they travel somewhere in a car d) to take someone somewhere in a car, truck etc",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "I am planning to drive to Morocco next year.",
+                "usage": "drive to/down/off etc"
+              },
+              {
+                "text": "the man driving the car",
+                "usage": null
+              },
+              {
+                "text": "Can you drive?",
+                "usage": null
+              },
+              {
+                "text": "So when did you learn to drive?",
+                "usage": null
+              },
+              {
+                "text": "Bye! Drive carefully!",
+                "usage": null
+              },
+              {
+                "text": "He drives 12 miles to work.",
+                "usage": null
+              },
+              {
+                "text": "He drives (=has) a BMW estate.",
+                "usage": null
+              },
+              {
+                "text": "After the accident, the other car just drove off.",
+                "usage": null
+              },
+              {
+                "text": "Shall we drive or take the bus?",
+                "usage": null
+              },
+              {
+                "text": "They drove back to Woodside.",
+                "usage": "drive to/down/off etc"
+              },
+              {
+                "text": "She drove Anna to London.",
+                "usage": null
+              },
+              {
+                "text": "I’ll drive you home.",
+                "usage": null
+              },
+              {
+                "text": "I drove myself to hospital.",
+                "usage": "drive yourself"
+              }
+            ]
+          },
+          {
+            "sense_number": "2",
+            "title": "drive_v_2",
+            "definition": "to force a person or animal to go somewhere",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "Torrential rain drove the players off the course.",
+                "usage": null
+              },
+              {
+                "text": "With a few loud whistles, they drove the donkeys out of the enclosure.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "3",
+            "title": "drive_v_3",
+            "definition": "to strongly influence someone to do something",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "The detective wondered what had driven Christine to phone her.",
+                "usage": "drive somebody to do something"
+              },
+              {
+                "text": "The noises in my head have nearly driven me to suicide.",
+                "usage": "drive somebody to/into something"
+              },
+              {
+                "text": "Phil, driven by jealousy, started spying on his wife.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "4",
+            "title": "drive_v_4",
+            "definition": "to make someone or something get into a bad or extreme state, usually an emotional one",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "This cough is driving me mad!",
+                "usage": "drive somebody crazy/nuts/mad/insane (=make someone feel very annoyed)"
+              },
+              {
+                "text": "The mosquitoes drive me to distraction.",
+                "usage": "drive somebody to distraction/desperation"
+              },
+              {
+                "text": "The factory had been driven into bankruptcy.",
+                "usage": "drive somebody/something into something"
+              }
+            ]
+          },
+          {
+            "sense_number": "5",
+            "title": "drive_v_5",
+            "definition": "to hit or push something into something else",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "We watched Dad drive the posts into the ground.",
+                "usage": "drive something into something"
+              },
+              {
+                "text": "She drove her heels into the sand.",
+                "usage": "drive something into something"
+              }
+            ]
+          },
+          {
+            "sense_number": "6",
+            "title": "drive_v_6",
+            "definition": "to make a person or animal work hard",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "Don’t drive yourself too hard.",
+                "usage": "drive yourself"
+              }
+            ]
+          },
+          {
+            "sense_number": "7",
+            "title": "drive_v_7",
+            "definition": "a) to move a ball etc forward in a game of baseball, football, golf etc by hitting or kicking it hard and fast b) to run with the ball towards the goal in sports such as basketball and American football",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "He drove the ball into the corner of the net.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "8",
+            "title": "drive_v_8",
+            "definition": "to provide the power for a vehicle or machine",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "a petrol-driven lawn mower",
+                "usage": "petrol-driven/electrically-driven/battery-driven etc"
+              }
+            ]
+          },
+          {
+            "sense_number": "9",
+            "title": "drive_v_9",
+            "definition": "if rain, snow, wind etc drives somewhere, it moves very quickly in that direction",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "The rain was driving down hard.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "10",
+            "title": "drive_v_10",
+            "definition": "to destroy an argument, plan etc completely",
+            "lex_unit": "drive a coach and horses through something",
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "The new bill will drive a coach and horses through recent trade agreements.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "11",
+            "title": "drive_v_11",
+            "definition": "to make a large hole in something using heavy equipment or machinery",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "They drove a tunnel through the mountains.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "12",
+            "title": "drive_v_12",
+            "definition": "to make something completely clear to someone",
+            "lex_unit": "drive something home",
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "He didn’t have to drive the point home. The videotape had done that.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "13",
+            "title": "drive_v_13",
+            "definition": "to do something that makes people disagree or start to dislike each other",
+            "lex_unit": "drive a wedge between somebody",
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "I don’t want to drive a wedge between you and your father.",
+                "usage": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "word": "drive",
+        "part_of_speech": "noun",
+        "pronunciation": {
+          "text": "/draɪv/",
+          "br_audio": "drive_Br.mp3",
+          "am_audio": "drive_Am.mp3"
+        },
+        "frequency": [
+          "S2",
+          "W2"
+        ],
+        "inflections": null,
+        "register": null,
+        "senses": [
+          {
+            "sense_number": "1",
+            "title": "drive_n_1",
+            "definition": "a journey in a car",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "Let’s go for a drive along the coast.",
+                "usage": "drive to/along etc"
+              },
+              {
+                "text": "Taylor took me for a drive through the town.",
+                "usage": "drive to/along etc"
+              },
+              {
+                "text": "It’s a two-hour drive from Calais to Thiepval.",
+                "usage": "an hour’s/a two-hour etc drive"
+              }
+            ]
+          },
+          {
+            "sense_number": "2",
+            "title": "drive_n_2",
+            "definition": "a strong natural need or desire",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "The treatment will not affect your sex drive.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "3",
+            "title": "drive_n_3",
+            "definition": "the hard area or road between your house and the street",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [
+              "driveway"
+            ],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "He parked his car in the drive.",
+                "usage": "in/on the drive"
+              }
+            ]
+          },
+          {
+            "sense_number": "4",
+            "title": "drive_n_4",
+            "definition": "an effort to achieve something, especially an effort by an organization for a particular purpose",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "a recruitment drive for new members",
+                "usage": null
+              },
+              {
+                "text": "an economy drive (=effort to reduce spending)",
+                "usage": null
+              },
+              {
+                "text": "a nationwide drive to crack down on crime",
+                "usage": "drive to do something"
+              }
+            ]
+          },
+          {
+            "sense_number": "5",
+            "title": "drive_n_5",
+            "definition": "determination and energy to succeed",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "Brian has got tremendous drive.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "6",
+            "title": "drive_n_6",
+            "definition": "the power from an engine that makes the wheels of a vehicle go round",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": []
+          },
+          {
+            "sense_number": "7",
+            "title": "drive_n_7",
+            "definition": "a piece of equipment in a computer that is used to get information from a disk or to store information on it",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": []
+          },
+          {
+            "sense_number": "8",
+            "title": "drive_n_8",
+            "definition": "an act of hitting a ball hard, especially in tennis, baseball, or golf",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "He hit a long, high drive to right field.",
+                "usage": null
+              }
+            ]
+          },
+          {
+            "sense_number": "9",
+            "title": "drive_n_9",
+            "definition": "several military attacks",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "a drive deep into enemy territory",
+                "usage": "drive into"
+              }
+            ]
+          },
+          {
+            "sense_number": "10",
+            "title": "drive_n_10",
+            "definition": "when animals such as cows or sheep are brought together and made to move in a particular direction",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": []
+          },
+          {
+            "sense_number": "11",
+            "title": "drive_n_11",
+            "definition": "a) to make a car, truck, bus etc move along b) if a car, truck etc drives somewhere, it moves there c) if people drive somewhere, they travel somewhere in a car d) to take someone somewhere in a car, truck etc",
+            "lex_unit": "Drive",
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "I am planning to drive to Morocco next year.",
+                "usage": "drive to/down/off etc"
+              },
+              {
+                "text": "the man driving the car",
+                "usage": null
+              },
+              {
+                "text": "Can you drive?",
+                "usage": null
+              },
+              {
+                "text": "So when did you learn to drive?",
+                "usage": null
+              },
+              {
+                "text": "Bye! Drive carefully!",
+                "usage": null
+              },
+              {
+                "text": "He drives 12 miles to work.",
+                "usage": null
+              },
+              {
+                "text": "He drives (=has) a BMW estate.",
+                "usage": null
+              },
+              {
+                "text": "After the accident, the other car just drove off.",
+                "usage": null
+              },
+              {
+                "text": "Shall we drive or take the bus?",
+                "usage": null
+              },
+              {
+                "text": "They drove back to Woodside.",
+                "usage": "drive to/down/off etc"
+              },
+              {
+                "text": "She drove Anna to London.",
+                "usage": null
+              },
+              {
+                "text": "I’ll drive you home.",
+                "usage": null
+              },
+              {
+                "text": "I drove myself to hospital.",
+                "usage": "drive yourself"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "word": "Drive",
+        "part_of_speech": "",
+        "pronunciation": {
+          "text": "/draɪv/",
+          "br_audio": "drive_Br.mp3",
+          "am_audio": "drive_Am.mp3"
+        },
+        "frequency": [],
+        "inflections": null,
+        "register": null,
+        "senses": [
+          {
+            "sense_number": null,
+            "title": "Drive_",
+            "definition": "used in the names of roads",
+            "lex_unit": null,
+            "geo": null,
+            "register": null,
+            "synonyms": [],
+            "opposites": [],
+            "examples": [
+              {
+                "text": "141 Park Drive",
+                "usage": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

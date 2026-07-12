@@ -84,13 +84,15 @@ def _assign_group_indices(own_flags: list[bool], first_phonetic_idx: int) -> lis
     """Entries before `first_phonetic_idx` join group 0 (borrowing forward);
     from `first_phonetic_idx` onward, a new group starts at every entry with
     its own phonetics."""
-    group_indices = [0] * len(own_flags)
+    # Consider this example: own_flags = [False, False, True, True, False, False]
+
+    group_indices = [0] * len(own_flags)  # group_indices = [0, 0, 0, 0, 0, 0]
     current_group = 0
-    for i in range(first_phonetic_idx, len(own_flags)):
-        if own_flags[i] and i != first_phonetic_idx:
+    for i in range(first_phonetic_idx + 1, len(own_flags)):
+        if own_flags[i]:
             current_group += 1
         group_indices[i] = current_group
-    return group_indices
+    return group_indices  # group_indices = [0, 0, 0, 1, 1, 1]
 
 
 async def _build_pronunciation(

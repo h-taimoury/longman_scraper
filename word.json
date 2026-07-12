@@ -1,0 +1,150 @@
+{
+  "word": "hello",
+  "entries": [
+    {
+      "word": "Hello!",
+      "part_of_speech": "",
+      "pronunciation": {
+        "text": "/həˈləʊ, he- $ -ˈloʊ/",
+        "br_audio": "hello_Br.mp3",
+        "am_audio": "hello_Am.mp3"
+      },
+      "frequency": [],
+      "inflections": null,
+      "register": "trademark",
+      "senses": [
+        {
+          "sense_number": null,
+          "title": "Hello!_",
+          "definition": "a British magazine with pictures and articles about famous people, such as film actors, fashion models, and members of the aristocracy. It typically describes how happy these people are and shows what beautiful houses they live in.",
+          "lex_unit": null,
+          "geo": null,
+          "register": null,
+          "synonyms": [],
+          "opposites": [],
+          "examples": []
+        }
+      ]
+    },
+    {
+      "word": "hello",
+      "part_of_speech": "interjection",
+      "pronunciation": {
+        "text": "/həˈləʊ, he- $ -ˈloʊ/",
+        "br_audio": "hello_Br.mp3",
+        "am_audio": "hello_Am.mp3"
+      },
+      "frequency": [
+        "S1"
+      ],
+      "inflections": null,
+      "register": null,
+      "senses": [
+        {
+          "sense_number": "1",
+          "title": "hello_interj_1",
+          "definition": "used as a greeting when you see or meet someone",
+          "lex_unit": null,
+          "geo": null,
+          "register": null,
+          "synonyms": [],
+          "opposites": [],
+          "examples": [
+            {
+              "text": "Hello, John! How are you?",
+              "usage": null
+            },
+            {
+              "text": "Stanley, come and say hello to your nephew.",
+              "usage": null
+            },
+            {
+              "text": "Well, hello there! I haven’t seen you for ages.",
+              "usage": null
+            }
+          ]
+        },
+        {
+          "sense_number": "2",
+          "title": "hello_interj_2",
+          "definition": "used when answering the telephone or starting a telephone conversation",
+          "lex_unit": null,
+          "geo": null,
+          "register": null,
+          "synonyms": [],
+          "opposites": [],
+          "examples": [
+            {
+              "text": "Hello – may I speak to Anne?",
+              "usage": null
+            }
+          ]
+        },
+        {
+          "sense_number": "3",
+          "title": "hello_interj_3",
+          "definition": "used when calling to get someone’s attention",
+          "lex_unit": null,
+          "geo": null,
+          "register": null,
+          "synonyms": [],
+          "opposites": [],
+          "examples": [
+            {
+              "text": "Hello! Is there anybody home?",
+              "usage": null
+            }
+          ]
+        },
+        {
+          "sense_number": "4",
+          "title": "hello_interj_4",
+          "definition": "used when you think someone is not acting sensibly or has said something stupid",
+          "lex_unit": null,
+          "geo": null,
+          "register": null,
+          "synonyms": [],
+          "opposites": [],
+          "examples": [
+            {
+              "text": "You didn’t remember her birthday? Hello!",
+              "usage": null
+            }
+          ]
+        },
+        {
+          "sense_number": "5",
+          "title": "hello_interj_5",
+          "definition": "used to show that you are surprised or confused by something",
+          "lex_unit": null,
+          "geo": "British English",
+          "register": null,
+          "synonyms": [],
+          "opposites": [],
+          "examples": [
+            {
+              "text": "Hello! What’s happened here?",
+              "usage": null
+            }
+          ]
+        },
+        {
+          "sense_number": "6",
+          "title": "hello_interj_6",
+          "definition": "to have a quick conversation with someone",
+          "lex_unit": "say hello",
+          "geo": null,
+          "register": null,
+          "synonyms": [],
+          "opposites": [],
+          "examples": [
+            {
+              "text": "Promise you’ll look in and say hello when you have time.",
+              "usage": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
