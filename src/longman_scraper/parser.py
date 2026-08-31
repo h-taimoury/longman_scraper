@@ -75,6 +75,34 @@ async def _parse_entry(
     )
 
     sense_els = entry_el.select("span.Sense")
+
+    # In most Longman entries, each sense is wrapped in a <span class="Sense">.
+    # However, some entries do not follow that structure. In particular, some verb
+    # entries whose only content is a cross-reference are represented through
+    # <span class="PhrVbEntry"> instead of <span class="Sense">.
+    #
+    # For example:
+    # - "spirit" (verb) -> cross-reference to "spirit somebody/something away/off"
+    # - "magic" (verb)  -> cross-reference to "magic somebody/something away"
+    #
+    # In these cases, there may be no <span class="Sense"> at all, and the only
+    # sense-like content appears inside PhrVbEntry > Tail > Crossref. So when no
+    # normal Sense elements are found, we also look for cross-reference-only
+    # phrasal-verb entries and treat their Tail element as the entry's sense.
+
+    if not sense_els:
+        phr_vb_entries = entry_el.select("span.PhrVbEntry")
+
+        for phr_vb_entry in phr_vb_entries:
+            tail_el = phr_vb_entry.find(
+                "span",
+                class_="Tail",
+                recursive=False,
+            )
+
+            if tail_el is not None and sense.is_cross_reference_only(tail_el):
+                sense_els.append(tail_el)
+
     has_multiple_senses = len(sense_els) > 1
 
     for index, sense_el in enumerate(sense_els, start=1):

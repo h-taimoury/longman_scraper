@@ -9,6 +9,9 @@ element that actually has a definition.
 
 from __future__ import annotations
 
+from urllib.parse import urljoin
+
+
 from bs4.element import Tag
 
 from .._text import clean_text
@@ -150,7 +153,7 @@ def crossref_target_url(sense_el: Tag, base_url: str) -> str | None:
     href = link_el.get("href")
     if not href:
         return None
-    return base_url.rstrip("/") + href
+    return urljoin(base_url, href)
 
 
 def crossref_label(sense_el: Tag) -> str | None:
