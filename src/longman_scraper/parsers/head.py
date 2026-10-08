@@ -39,7 +39,8 @@ def parse_inflections(entry_el: Tag) -> str | None:
 
 def parse_register(entry_el: Tag) -> str | None:
     """sth like: 'spoken informal'
-    Note that there are two kinds of registers: the one in the Head block (this function extracts it) and the one in each Sense block. The Head-level register applies to all senses of this entry, while the Sense-level register applies only to that sense. Pay attention to 'span.Head span.REGISTERLAB' that means we are looking for the register of the whole entry under the Head block. Note that the Head block contains the entry level information."""
+    Note that there are two kinds of registers: the one in the Head block (this function extracts it) and the one in each Sense block. The Head-level register applies to all senses of this entry, while the Sense-level register applies only to that sense. Pay attention to 'span.Head span.REGISTERLAB' that means we are looking for the register of the whole entry under the Head block. Note that the Head block contains the entry level information.
+    """
     register_els = entry_el.select("span.Head span.REGISTERLAB")
     if not register_els:
         return None
@@ -82,3 +83,38 @@ def parse_audio_urls(entry_el: Tag) -> tuple[str | None, str | None]:
     british_url = bre_el.get("data-src-mp3") if bre_el else None
     american_url = ame_el.get("data-src-mp3") if ame_el else None
     return british_url, american_url
+
+
+def parse_homonym_num(entry_el: Tag) -> int | None:
+    """Extract Longman's homonym number from the entry head.
+
+    HOMNUM distinguishes separate dictionary entries for the same headword. For example the word 'lie' has two verb entries in Longman. So part of speech is not sufficient to distinguish them. This is why I decided to store this data too. It is entry-level data, not a sense number.
+    Each entry has a HOMNUM, starting at 1 for the first entry of a given headword and incrementing for each subsequent entry.
+    """
+    homnum_el = entry_el.select_one("span.Head > span.HOMNUM")
+    if homnum_el is None:
+        return None
+
+    text = clean_text(homnum_el.get_text())
+    if not text:
+        return None
+
+    try:
+        return int(text)
+    except ValueError:
+        return None
+
+
+def parse_level(entry_el: Tag) -> dict[str, str] | None:
+    """Read only this entry's header level, preserving the circle characters."""
+    head_el = entry_el.select_one("span.Head")
+    if head_el is None:
+        return None
+    level_el = head_el.select_one(":scope > span.tooltip.LEVEL")
+    if level_el is None:
+        return None
+    tooltip = str(level_el.get("title", "")).strip()
+    indicator = level_el.get_text().strip()
+    if not tooltip or not indicator:
+        return None
+    return {"tooltip": tooltip, "indicator": indicator}

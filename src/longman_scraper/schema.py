@@ -67,10 +67,12 @@ class Entry:
     word: str
     part_of_speech: str
     pronunciation: Pronunciation | None
+    homonym_num: int | None = None
     frequency: list[str] = field(default_factory=list)
     inflections: str | None = None
     register: str | None = None
     senses: list[Sense] = field(default_factory=list)
+    level: dict[str, str] | None = None
 
 
 @dataclass

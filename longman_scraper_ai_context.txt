@@ -1,0 +1,202 @@
+LONGMAN_SCRAPER — REFERENCE FOR AI ASSISTANTS (Django backend integration)
+===========================================================================
+Purpose of this file: give an AI assistant everything it needs to write code
+that CALLS the `longman_scraper` package correctly, without being given the
+package's internal source code. Treat `longman_scraper` as a black-box
+library — only its public API (below) is relevant. Do not invent methods,
+fields, or behavior beyond what is documented here.
+
+-----------------------------------------------------------------------
+1. REPOSITORY / FOLDER LAYOUT
+-----------------------------------------------------------------------
+projects/
+├── lingo_palm/            <- the language-learning project (this repo)
+│   ├── frontend/           Next.js app
+│   └── backend/            Django app (manage.py lives here)
+└── longman_scraper/        <- standalone sibling package (separate repo)
+
+`longman_scraper` is NOT inside `lingo_palm`. It is a sibling folder of
+`lingo_palm`, at the same level. So relative to the Django backend folder
+(`projects/lingo_palm/backend/`), the package lives two levels up:
+
+    ../../longman_scraper
+
+Install it in editable mode into the backend's virtualenv, run from inside
+`projects/lingo_palm/backend/`:
+
+    pip install -e ../../longman_scraper
+    playwright install chromium   # required once, installs the Chromium binary
+
+This package has NO Django/Celery dependency and must never be imported in
+production settings (see section 5).
+
+-----------------------------------------------------------------------
+2. WHAT THE PACKAGE DOES
+-----------------------------------------------------------------------
+`longman_scraper` scrapes word entries from the Longman Dictionary of
+Contemporary English (ldoceonline.com) using Playwright (headless Chromium)
++ BeautifulSoup, and returns plain Python dataclasses (no ORM objects, no
+Django coupling). It also downloads British/American pronunciation audio
+files to a local directory as a side effect of scraping.
+
+Business-dictionary entries (a secondary dictionary block shown on some
+pages) are always silently excluded — this is not configurable.
+
+Cross-reference senses (e.g. "→ books") are transparently resolved by
+fetching the target word's page and substituting its first defined sense.
+The caller never sees any marker indicating a sense was cross-referenced.
+
+Longman homonym numbers (`HOMNUM`) are also captured when present. They are
+returned on the parent `Entry` as `homonym_num: int | None`. A homonym
+number distinguishes separate dictionary entries for the same headword
+(including cases where multiple entries have the same part of speech); it
+is entry-level data, not a sense number. When Longman does not provide a
+`HOMNUM` element for an entry, `homonym_num` is None.
+
+-----------------------------------------------------------------------
+3. PUBLIC API
+-----------------------------------------------------------------------
+Import everything from the top-level package:
+
+    from longman_scraper import (
+        scrape_word, scrape_words,
+        WordResult, Entry, Pronunciation, Sense, Example,
+        ScrapeError, WordNotFoundError, PageLoadError, AudioDownloadError,
+    )
+
+--- Functions (both async — must be run via asyncio) ---
+
+async def scrape_word(word: str, audio_dir: str = "./pronunciation_audios") -> WordResult
+    Scrapes a single word. Launches and tears down its own browser.
+    Downloads that word's British/American audio into `audio_dir`.
+
+async def scrape_words(words: list[str], audio_dir: str = "./pronunciation_audios") -> dict[str, WordResult]
+    Scrapes multiple words concurrently, sharing one browser instance.
+    Returns a dict keyed by the original word string (input order preserved
+    as dict insertion order). If any single word raises, the exception
+    propagates out of `scrape_words` (no partial/best-effort result).
+
+--- Exceptions (all subclass ScrapeError) ---
+
+WordNotFoundError(word, url)   — page loaded but had no dictionary entries
+PageLoadError(url, original_error) — page failed to load (timeout, network)
+AudioDownloadError(url, original_error) — a pronunciation mp3 failed to download
+
+Always wrap calls in try/except for these three when integrating with a
+view or admin action — a scrape can legitimately fail on a made-up word,
+typo, or network hiccup.
+
+-----------------------------------------------------------------------
+4. RETURNED DATA SHAPE (plain dataclasses — no methods, just data)
+-----------------------------------------------------------------------
+WordResult
+├── word: str                      # the word originally requested
+└── entries: list[Entry]
+
+Entry                              # one entry per part-of-speech / homonym
+├── word: str                      # parsed head word (may differ slightly
+│                                     from WordResult.word, e.g. "Hello!" vs "hello")
+├── part_of_speech: str            # e.g. "noun", "verb", "" if none shown
+├── homonym_num: int | None        # Longman HOMNUM for this entry, e.g. 1 or 2;
+│                                     None if no HOMNUM is shown. Entry-level data,
+│                                     not a sense number.
+├── pronunciation: Pronunciation | None
+├── frequency: list[str]           # e.g. ["S1", "W1"]; spoken/written freq bands
+├── inflections: str | None        # e.g. "(grabbed, grabbing)"
+├── register: str | None           # entry-wide register, e.g. "trademark"
+└── senses: list[Sense]
+
+Pronunciation
+├── text: str | None               # e.g. "/bʊk/"
+├── br_audio: str | None           # filename saved under audio_dir, e.g. "book_Br.mp3"
+└── am_audio: str | None           # e.g. "book_Am.mp3"
+    NOTE: shared across multiple Entries when the site only prints
+    phonetics once for a group of homonyms — several Entries can point to
+    an identical Pronunciation (same filenames).
+
+Sense                              # ONE dictionary sense = what you store
+├── sense_number: str | None       # e.g. "1"; None if entry has only one sense
+├── title: str                    # STABLE ID, e.g. "book_n_2", "head_verb_1"
+│                                    format: {word}_{pos_abbrev}_{index}
+│                                    (no _{index} suffix if entry has only one sense)
+├── definition: str
+├── lex_unit: str | None           # the bold phrase this sense defines, e.g.
+│                                    "in advance (of something)", "by the book"
+├── geo: str | None                # e.g. "British English"
+├── register: str | None           # e.g. "informal", "spoken"
+├── synonyms: list[str]
+├── opposites: list[str]
+└── examples: list[Example]
+
+Example
+├── text: str                      # the example sentence
+└── usage: str | None              # grammar pattern or collocation this
+                                      example illustrates, e.g. "book about/on",
+                                      "drive somebody crazy/nuts/mad/insane"; None
+                                      for plain examples with no pattern
+
+Part-of-speech abbreviations used inside `title` (word_ABBREV_n):
+noun→n, verb→v, adjective→adj, adverb→adv, preposition→prep,
+conjunction→conj, pronoun→pron, determiner→det, predeterminer→predet,
+number→num, interjection→interj, exclamation→exclam, phrasal verb→pv,
+auxiliary verb→aux, modal verb→modal, linking verb→linkv.
+Anything not in this table is used as-is.
+
+-----------------------------------------------------------------------
+5. HOW TO CALL IT FROM DJANGO (dev-only, synchronous context)
+-----------------------------------------------------------------------
+`longman_scraper` is fully async (Playwright requirement). Django code
+calling it is normally sync, so wrap with asyncio.run(...):
+
+    import asyncio
+    from longman_scraper import scrape_word, WordNotFoundError, PageLoadError, AudioDownloadError
+
+    def scrape_word_sync(word: str, audio_dir: str) -> WordResult:
+        try:
+            return asyncio.run(scrape_word(word, audio_dir=audio_dir))
+        except (WordNotFoundError, PageLoadError, AudioDownloadError) as exc:
+            # surface as a user-facing error in the admin/editor UI
+            raise
+
+Architectural rules to respect (do not violate without an explicit request
+from the project owner):
+- Only `scraper_admin`, which exists in DEVELOPMENT settings only, imports
+  and calls longman_scraper. It calls it synchronously (no Celery/task
+  queue — scraping is manual and infrequent).
+- Production settings (base.py / production.py split) NEVER install or
+  import longman_scraper and NEVER launch Playwright. Production only
+  serves APIs backed by DictionaryEntry rows already written to the DB.
+- Scraping is triggered by an admin, either from a dedicated "manage
+  dictionary" page, or inline from the subtitle editor when a needed word
+  is missing. Both paths go through the same scrape_word/scrape_words call.
+- After scraping, map each returned `Sense` (plus its parent `Entry`'s
+  word/part_of_speech/pronunciation/frequency/etc.) onto a DictionaryEntry
+  row via Django ORM. `Sense.title` (e.g. "book_n_2") is the natural
+  human-searchable identifier admins use in the editor's search dialog —
+  keep it as the DictionaryEntry's title/slug field.
+- `Entry.homonym_num` should be persisted alongside each mapped sense when
+  the Django model stores homonym identity. `Sense.title` itself does not
+  change and can legitimately repeat across different homonyms (for example,
+  two separate verb entries can both produce the same title pattern). If the
+  database enforces uniqueness for stored senses, use the pair
+  (`title`, `homonym_num`) rather than `title` alone, with appropriate handling
+  for entries whose `homonym_num` is None.
+- Audio files are saved to disk by the scraper itself (via `audio_dir`);
+  the Django integration is responsible for deciding where `audio_dir`
+  points (e.g. into MEDIA_ROOT) and persisting br_audio/am_audio filenames
+  (or resulting URLs) onto the DictionaryEntry/Pronunciation model fields.
+
+-----------------------------------------------------------------------
+6. THINGS THE AI SHOULD NOT DO
+-----------------------------------------------------------------------
+- Do not assume any additional public functions/classes beyond section 3 —
+  there is no `scrape_sense`, no sync API, no CLI, no config object.
+- Do not assume field names beyond the dataclasses in section 4 — e.g.
+  there is no `Sense.image`, no `Entry.level`, no `WordResult.source_url`.
+- Do not try to import from `longman_scraper.parsers.*` or any internal
+  module — those are private implementation details, not part of the
+  supported API, and may change without notice.
+- Do not add retry/backoff logic inside longman_scraper's own calls unless
+  asked — handle failures at the Django integration layer instead.
+- Do not make production code path depend on longman_scraper, Playwright,
+  or any browser automation.

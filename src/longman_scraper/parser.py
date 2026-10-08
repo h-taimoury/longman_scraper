@@ -69,7 +69,9 @@ async def _parse_entry(
         word=word,
         part_of_speech=part_of_speech,
         pronunciation=pronunciation,
+        homonym_num=head.parse_homonym_num(entry_el),
         frequency=head.parse_frequency(entry_el),
+        level=head.parse_level(entry_el),
         inflections=head.parse_inflections(entry_el),
         register=head.parse_register(entry_el),
     )
