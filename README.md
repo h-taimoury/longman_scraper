@@ -72,13 +72,17 @@ docstrings.
   scraped or returned — this is hardcoded into entry detection in `parser.py`,
   not a configurable option.
 - Cross-reference senses (e.g. "→ books") are resolved by fetching the target
-  page and re-parsing it: the target page's first sense that actually has a
+  HTML through the already-open word page’s JavaScript session (without a
+  new tab or navigation) and parsing it: the target page's first sense that actually has a
   definition is substituted in place of the pointer. This resolution is
   transparent to callers — the resulting `Sense` looks like any other sense,
   with no field marking that it originated from a cross-reference or
   recording which page it came from.
 - If the target page has no sense with a definition (e.g. it turns out to be
-  another pointer, or the fetch fails), the cross-reference sense is simply
-  dropped rather than included with empty data.
+  another pointer), the cross-reference sense is simply
+  dropped rather than included with empty data. Fetch failures raise
+  `PageLoadError`, including HTTP errors; they are not silently dropped.
+  Cross-reference requests remain sequential, with the existing four-minute
+  timeout and no cache or automatic retries.
 - `scrape_words` runs all words concurrently via `asyncio.gather`, sharing a
   single browser instance (mirrors the original Node scraper's behavior).

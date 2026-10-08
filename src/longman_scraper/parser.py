@@ -37,7 +37,7 @@ async def parse_word_page(
 
     entries: list[Entry] = []
     for entry_el, pronunciation in zip(non_business_els, pronunciations):
-        entry = await _parse_entry(entry_el, browser, base_url, pronunciation)
+        entry = await _parse_entry(entry_el, page, base_url, pronunciation)
         if entry is not None:
             print(
                 f"[entry] {entry.word} ({entry.part_of_speech}) - {len(entry.senses)} senses",
@@ -55,7 +55,7 @@ def _is_business_entry(dictentry_el: Tag) -> bool:
 
 async def _parse_entry(
     entry_el: Tag,
-    browser: Browser,
+    page: Page,
     base_url: str,
     pronunciation: Pronunciation | None,
 ) -> Entry | None:
@@ -110,7 +110,7 @@ async def _parse_entry(
     for index, sense_el in enumerate(sense_els, start=1):
         resolved_sense = await _resolve_sense(
             sense_el,
-            browser,
+            page,
             base_url,
             word,
             part_of_speech,
@@ -126,7 +126,7 @@ async def _parse_entry(
 
 async def _resolve_sense(
     sense_el: Tag,
-    browser: Browser,
+    page: Page,
     base_url: str,
     word: str,
     part_of_speech: str,
@@ -142,7 +142,7 @@ async def _resolve_sense(
             return None
         crossref_label = sense.crossref_label(sense_el)
         print(f"  [crossref] following link to {url}", flush=True)
-        resolved = await fetch_cross_reference_sense(browser, url)
+        resolved = await fetch_cross_reference_sense(page, url)
         if resolved is None:
             return None
         target_sense_el = resolved
